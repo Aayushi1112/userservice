@@ -51,4 +51,22 @@ public class UserServiceImpl implements UserService {
         userDTO.setPassword(null);
         return userDTO;
     }
+
+    @Override
+    public List<UserDTO> getAllUsers() {
+
+        List<UserEntity> userEntities = userRepository.findAll();
+        List<UserDTO> userDtos = null;
+
+        if(userEntities != null && !userEntities.isEmpty()){// not null & not empty
+            userDtos = new ArrayList<>();
+            UserDTO dto = null;
+            for(UserEntity ue : userEntities){
+                dto = new UserDTO();
+                BeanUtils.copyProperties(ue, dto);
+                userDtos.add(dto);
+            }
+        }
+        return userDtos;
+    }
 }
